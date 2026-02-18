@@ -10,16 +10,14 @@ import NoteList from "@/components/NoteList/NoteList";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import Modal from "@/components/Modal/Modal";
 
-const notesKeys = {
-  list: (query: string, page: number) => ["notes", { query, page }] as const,
-};
+
 export default function NotesClient() {
   const [searchTerm, setSearchTerm] = useState("");
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { data, isLoading, isError, isFetching } = useQuery({
-    queryKey: ["notes", notesKeys.list(query, page)],
+    queryKey: ["notes", {query, page}],
     queryFn: () => fetchNotes(query, page),
     initialData: {
       notes: [],
